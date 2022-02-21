@@ -1,0 +1,13 @@
+{
+  "name": "mazes",
+  "version": "1.0.0",
+  "description": "Drawing mazes so complex I cannot escape them",
+  "author": "Wouter Stekelenburg",
+  "scripts": {
+    "start": "npx http-server ."
+  },
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^14.1.0"
+  }
+}

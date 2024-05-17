@@ -1,4 +1,3 @@
-
 const TAU = 2 * Math.PI;
 
 function angle(x, y) {
@@ -47,7 +46,7 @@ function arc(x0, y0, x1, y1) {
   if (denom === 0) {
     const D = x1 * y0 - x0 * y1;
     throw new Error(
-      `the points are on the same radius [${x0}, ${y0}], [${x1}, ${y1}], ${D}`
+      `the points are on the same radius [${x0}, ${y0}], [${x1}, ${y1}], ${D}`,
     );
   }
   const alpha = (1 - x2 * x2 - y2 * y2 + dx * dx + dy * dy) / (2 * denom);
@@ -99,7 +98,7 @@ export function drawArcs(walls, size = 700) {
         scale * coords[2],
         coords[3],
         coords[4],
-        coords[5]
+        coords[5],
       );
     }
     context.stroke();

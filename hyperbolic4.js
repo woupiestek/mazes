@@ -13,8 +13,7 @@ export const Triangle_2_4_5 = {
       return Triangle_2_4_5.append(head.head, order, head.power + power);
     }
 
-    const id =
-      (head === null ? "" : head.id) +
+    const id = (head === null ? "" : head.id) +
       (order === 5 ? Triangle_2_4_5.alpha : Triangle_2_4_5.beta) +
       (power > 1 ? Triangle_2_4_5.supers[power] : "");
     const candidate = { id, head, order, power };
@@ -87,13 +86,13 @@ export const Triangle_2_4_5 = {
       }
       done[org] = true;
       const t1 = Triangle_2_4_5.id(
-        Triangle_2_4_5.appendAll(path, [4, 1, 5, 1, 4, 1, 5, 1])
+        Triangle_2_4_5.appendAll(path, [4, 1, 5, 1, 4, 1, 5, 1]),
       );
       if (t1 !== org) {
         fails.push(`${org} !== ${t1}`);
       }
       const t2 = Triangle_2_4_5.id(
-        Triangle_2_4_5.appendAll(path, [5, 1, 4, 1, 5, 1, 4, 1])
+        Triangle_2_4_5.appendAll(path, [5, 1, 4, 1, 5, 1, 4, 1]),
       );
       if (t2 !== org) {
         fails.push(`${org} !== ${t2}`);

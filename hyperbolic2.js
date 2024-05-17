@@ -9,8 +9,7 @@ export const Triangle_2_3_7 = {
     if (power === 0) {
       return head;
     }
-    const id =
-      (head !== null ? head.id : "") +
+    const id = (head !== null ? head.id : "") +
       (prime === 7 ? Triangle_2_3_7.alpha : Triangle_2_3_7.beta) +
       (power > 1 ? Triangle_2_3_7.supers[power] : "");
     const candidate = { head, power, prime, id };
@@ -140,13 +139,13 @@ function test() {
       }
       done[org] = true;
       const t1 = Triangle_2_3_7.string(
-        Triangle_2_3_7.appendAll(path, [3, 1, 7, 1, 3, 1, 7, 1])
+        Triangle_2_3_7.appendAll(path, [3, 1, 7, 1, 3, 1, 7, 1]),
       );
       if (t1 !== org) {
         fails.push(`${org} !== ${t1}`);
       }
       const t2 = Triangle_2_3_7.string(
-        Triangle_2_3_7.appendAll(path, [7, 1, 3, 1, 7, 1, 3, 1])
+        Triangle_2_3_7.appendAll(path, [7, 1, 3, 1, 7, 1, 3, 1]),
       );
       if (t2 !== org) {
         fails.push(`${org} !== ${t2}`);

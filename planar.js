@@ -40,7 +40,7 @@ function disc(inner, outer, distance = 3 / Math.PI) {
       nodes[j][i] = newNode(
         `${j}:${i}`,
         r * Math.cos(phi) + outer,
-        r * Math.sin(phi) + outer
+        r * Math.sin(phi) + outer,
       );
       connect(nodes[j][i - 1], nodes[j][i]);
       const k = Math.round((lastN / n) * i);
@@ -149,7 +149,7 @@ function hexagons(inner, outer) {
       const r = Math.max(
         Math.abs(i - outer - 1 / 2),
         Math.abs(j + i + sign / 4 - 3 * outer - 3 / 2) / 2,
-        Math.abs(j - i - sign / 4 - outer - 1 / 2) / 2
+        Math.abs(j - i - sign / 4 - outer - 1 / 2) / 2,
       );
 
       if (r >= outer || r < inner) {
@@ -214,7 +214,7 @@ function hexagon3(inner, outer) {
       const r = Math.max(
         Math.abs(i - (3 / 2) * outer),
         Math.abs(j - (3 / 2) * outer),
-        Math.abs(j - i)
+        Math.abs(j - i),
       );
       if (r < (3 / 2) * inner) {
         continue;
@@ -222,13 +222,15 @@ function hexagon3(inner, outer) {
       nodes[i][j] = newNode(
         `${i}:${j}`,
         (j + i - 3 * outer) * W + outer,
-        (j - i) * H + outer
+        (j - i) * H + outer,
       );
-      for (const node of [
-        nodes[i][j - 1],
-        nodes[i - 1] && nodes[i - 1][j - 1],
-        nodes[i - 1] && nodes[i - 1][j],
-      ]) {
+      for (
+        const node of [
+          nodes[i][j - 1],
+          nodes[i - 1] && nodes[i - 1][j - 1],
+          nodes[i - 1] && nodes[i - 1][j],
+        ]
+      ) {
         connect(nodes[i][j], node);
       }
     }
@@ -342,23 +344,27 @@ function cairo3(inner, outer) {
       }
       const node0 = newNode(`${i}:${j}:-`, i - 0.5, j - 0.5);
       order4.push(node0);
-      for (const node1 of [
-        i > 0 && order3[i - 1][j - 1],
-        order3[i][j - 1],
-        i > 0 && order3[i - 1][j],
-        order3[i][j],
-      ]) {
+      for (
+        const node1 of [
+          i > 0 && order3[i - 1][j - 1],
+          order3[i][j - 1],
+          i > 0 && order3[i - 1][j],
+          order3[i][j],
+        ]
+      ) {
         connect(node0, node1);
       }
 
       const node2 = newNode(`${i}:${j}:+`, i + 0.5, j + 0.5);
       order4.push(node0);
-      for (const node3 of [
-        order3[i + 1][j + 1],
-        order3[i][j + 1],
-        order3[i + 1][j],
-        order3[i][j],
-      ]) {
+      for (
+        const node3 of [
+          order3[i + 1][j + 1],
+          order3[i][j + 1],
+          order3[i + 1][j],
+          order3[i][j],
+        ]
+      ) {
         connect(node2, node3);
       }
     }
@@ -386,7 +392,7 @@ function snubSquare(inner, outer) {
       nodes[i][j] = newNode(
         `${i}:${j}`,
         i + (sj ? yank : -yank),
-        j + (si ? yank : -yank)
+        j + (si ? yank : -yank),
       );
       connect(nodes[i][j], nodes[i][j - 1]);
       if (!nodes[i - 1]) {
@@ -463,7 +469,7 @@ function spiral2(inner, outer, count = 3, distance = 3 / Math.PI) {
       nodes[a][ph] = newNode(
         `${a}:${ph}`,
         r * Math.cos(phi - ph * beta) + outer,
-        r * Math.sin(phi - ph * beta) + outer
+        r * Math.sin(phi - ph * beta) + outer,
       );
       if (nodes[a - 1]) {
         connect(nodes[a][ph], nodes[a - 1][ph]);
@@ -496,7 +502,7 @@ function spiral3(inner, outer, count = 3, distance = 3 / Math.PI) {
       nodes[a][ph] = newNode(
         `${a}:${ph}`,
         r * Math.cos(phi + ph * beta) + outer,
-        r * Math.sin(phi + ph * beta) + outer
+        r * Math.sin(phi + ph * beta) + outer,
       );
       if (nodes[a + 1]) {
         connect(nodes[a][ph], nodes[a + 1][ph]);
@@ -527,7 +533,7 @@ function elipticSpiral(radius, limit = Math.PI / 16, count = 3) {
       nodes[n][i] = newNode(
         `${n}:${i}`,
         r * Math.cos(dphi * th + ph * n) + radius,
-        r * Math.sin(dphi * th + ph * n) + radius
+        r * Math.sin(dphi * th + ph * n) + radius,
       );
       connect(nodes[n][i], nodes[n][i - 1]);
     }
@@ -561,7 +567,7 @@ function elipticSpiral2(radius, inner = 4, armCount = 3) {
     const A = i * dA;
     const rh = Math.acos(1 - A / TAU);
     const i2 = Math.round(
-      (TAU - (TAU - A) * cosCH + Math.sqrt(A * (2 * TAU - A)) * sinCH) / dA
+      (TAU - (TAU - A) * cosCH + Math.sqrt(A * (2 * TAU - A)) * sinCH) / dA,
     );
     const r = Math.tan(rh / 2) * radius;
     const th0 = dTh * (rh / cellHeight);
@@ -569,7 +575,7 @@ function elipticSpiral2(radius, inner = 4, armCount = 3) {
       nodes[i][j] = newNode(
         `${i}:${j}`,
         r * Math.cos(th0 + dTh * j) + radius,
-        r * Math.sin(th0 + dTh * j) + radius
+        r * Math.sin(th0 + dTh * j) + radius,
       );
       connect(nodes[i][j], nodes[i + 1] && nodes[i + 1][j]);
       connect(nodes[i][j], nodes[i2] && nodes[i2][(j > 0 ? j : armCount) - 1]);
@@ -633,7 +639,7 @@ function hyperbolicDisc(radius, div = 64 / TAU) {
       nodes[i][j] = newNode(
         `${i}:${j}`,
         (1 + r * Math.cos(dphi * j)) * radius,
-        (1 + r * Math.sin(dphi * j)) * radius
+        (1 + r * Math.sin(dphi * j)) * radius,
       );
       connect(nodes[i][j], nodes[i][j - 1]);
       if (i > 1) {
@@ -670,7 +676,7 @@ function hyperbolicSpiral(radius, armCount = 3) {
       const node = newNode(
         `${i}:${k}`,
         (1 + d * Math.cos(dPhi * (r / deltaD - k))) * radius,
-        (1 + d * Math.sin(dPhi * (r / deltaD - k))) * radius
+        (1 + d * Math.sin(dPhi * (r / deltaD - k))) * radius,
       );
       nodes[i][k] = node;
       if (i < 2) {
@@ -708,7 +714,7 @@ function walk(nodes) {
     b: while (true) {
       wall.push(node);
       const neighbours = Object.values(node.neighbours).filter(
-        ({ state }) => state === State.RAW
+        ({ state }) => state === State.RAW,
       );
       switch (neighbours.length) {
         case 0:
@@ -745,7 +751,7 @@ function bezier(context, coords) {
       ALPHA * (coords[i + 1][1] - coords[i - 1][1]) + coords[i][1],
       ALPHA * (coords[i][0] - coords[i + 2][0]) + coords[i + 1][0],
       ALPHA * (coords[i][1] - coords[i + 2][1]) + coords[i + 1][1],
-      ...coords[i + 1]
+      ...coords[i + 1],
     );
   }
   context.stroke();

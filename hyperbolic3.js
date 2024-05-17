@@ -30,7 +30,7 @@ function walk() {
   const walls = [];
   const path0 = Triangle_2_3_7.appendAll(
     null,
-    [3, 1, 7, 3, 3, 1, 7, 3, 3, 1, 7, 3]
+    [3, 1, 7, 3, 3, 1, 7, 3, 3, 1, 7, 3],
   );
   const stack = [path0];
   const visited = { [Triangle_2_3_7.string(path0)]: true };

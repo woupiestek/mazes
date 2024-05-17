@@ -14,8 +14,7 @@ export const Triangle_2_4_4 = {
       return Triangle_2_4_4.append(head.head, symbol, head.power + power);
     }
 
-    const id =
-      (head === null ? "" : head.id) +
+    const id = (head === null ? "" : head.id) +
       symbol +
       (power > 1 ? Triangle_2_4_4.supers[power] : "");
     const candidate = { id, head, symbol, power };
@@ -47,7 +46,7 @@ export const Triangle_2_4_4 = {
       h = Triangle_2_4_4.append(
         h.head,
         (c & 1) === 0 ? symbol : head.symbol,
-        3
+        3,
       );
       for (; c > 0; c--) {
         h = Triangle_2_4_4.append(h, (c & 1) === 0 ? head.symbol : symbol, 2);
@@ -92,13 +91,13 @@ export const Triangle_2_4_4 = {
       }
       done[org] = true;
       const t1 = Triangle_2_4_4.id(
-        Triangle_2_4_4.appendAll(path, [ALPHA, 1, BETA, 1, ALPHA, 1, BETA, 1])
+        Triangle_2_4_4.appendAll(path, [ALPHA, 1, BETA, 1, ALPHA, 1, BETA, 1]),
       );
       if (t1 !== org) {
         fails.push(`${org} !== ${t1}`);
       }
       const t2 = Triangle_2_4_4.id(
-        Triangle_2_4_4.appendAll(path, [BETA, 1, ALPHA, 1, BETA, 1, ALPHA, 1])
+        Triangle_2_4_4.appendAll(path, [BETA, 1, ALPHA, 1, BETA, 1, ALPHA, 1]),
       );
       if (t2 !== org) {
         fails.push(`${org} !== ${t2}`);
@@ -135,8 +134,8 @@ const length = (() => {
     if (mem[key] !== undefined) {
       return mem[key];
     }
-    return (mem[key] =
-      Math.sqrt(path.power * (4 - path.power)) / 2 + l(path.head));
+    return (mem[key] = Math.sqrt(path.power * (4 - path.power)) / 2 +
+      l(path.head));
   };
 })();
 
@@ -159,7 +158,7 @@ function walk() {
       const open = neighbours(node).filter(
         (paths) =>
           paths.map(length).every((l) => 3 <= l && l <= 24) &&
-          !visited[key(paths)]
+          !visited[key(paths)],
       );
       switch (open.length) {
         case 0:
@@ -193,14 +192,13 @@ const spot2 = (() => {
     }
     const [x, y, z] = f(path.head);
     const z2 = (z + path.power) % 4;
-    return (mem[key] =
-      path.symbol === ALPHA
-        ? [x - cyc[z] + cyc[z2], y - cyc[(z + 1) % 4] + cyc[(z2 + 1) % 4], z2]
-        : [
-            x - cyc[(5 - z) % 4] + cyc[(5 - z2) % 4],
-            y - cyc[(4 - z) % 4] + cyc[(4 - z2) % 4],
-            z2,
-          ]);
+    return (mem[key] = path.symbol === ALPHA
+      ? [x - cyc[z] + cyc[z2], y - cyc[(z + 1) % 4] + cyc[(z2 + 1) % 4], z2]
+      : [
+        x - cyc[(5 - z) % 4] + cyc[(5 - z2) % 4],
+        y - cyc[(4 - z) % 4] + cyc[(4 - z2) % 4],
+        z2,
+      ]);
   };
 })();
 
@@ -231,15 +229,14 @@ function walk2() {
     let node = stack.pop();
     const wall = [spot2(node)];
     while (true) {
-      const open = NEIGHBOURS.map((n) =>
-        Triangle_2_4_4.appendAll(node, n)
-      ).filter((p) => {
-        if (visited[Triangle_2_4_4.id(p)]) {
-          return false;
-        }
-        const l = length(p);
-        return l >= 3 && l <= 24;
-      });
+      const open = NEIGHBOURS.map((n) => Triangle_2_4_4.appendAll(node, n))
+        .filter((p) => {
+          if (visited[Triangle_2_4_4.id(p)]) {
+            return false;
+          }
+          const l = length(p);
+          return l >= 3 && l <= 24;
+        });
       switch (open.length) {
         case 0:
           if (wall.length > 1) {

@@ -166,7 +166,7 @@ function traverse(passages, document, context, { maxX, maxY, unit }) {
       (y + 1.5) * unit,
       unit * 0.25,
       0,
-      Math.PI * 2
+      Math.PI * 2,
     );
     context.fillStyle = `#000000`;
     context.fill();
@@ -184,7 +184,7 @@ function traverse(passages, document, context, { maxX, maxY, unit }) {
         (x + 6 / 5) * unit,
         (y + 6 / 5) * unit,
         (unit * 3) / 5,
-        (unit * 3) / 5
+        (unit * 3) / 5,
       );
       switch (code) {
         case "ArrowUp":
@@ -218,7 +218,7 @@ function traverse(passages, document, context, { maxX, maxY, unit }) {
       }
       drawBall(x, y);
     },
-    false
+    false,
   );
 }
 

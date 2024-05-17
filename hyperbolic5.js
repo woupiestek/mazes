@@ -36,7 +36,8 @@ function walk() {
       ]
         .map((tail) => Triangle_2_4_5.appendAll(path, tail))
         .filter(
-          (path2) => !(length(path2) > 7.5 || visited[Triangle_2_4_5.id(path2)])
+          (path2) =>
+            !(length(path2) > 7.5 || visited[Triangle_2_4_5.id(path2)]),
         );
       switch (open.length) {
         case 0:

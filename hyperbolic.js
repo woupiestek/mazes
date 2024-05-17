@@ -110,10 +110,10 @@ function jump_3_7(r, th, ph) {
 
   // this is information that cosine loses
   const sign = ph > 0 ? 1 : -1;
-  const th2 =
-    th + sign * Math.acos((coshr * coshr2 - COSH_3_7) / (sinhr * sinhr2));
-  const ph2 =
-    -sign * Math.acos((coshr2 * COSH_3_7 - coshr) / (sinhr2 * SINH_3_7));
+  const th2 = th +
+    sign * Math.acos((coshr * coshr2 - COSH_3_7) / (sinhr * sinhr2));
+  const ph2 = -sign *
+    Math.acos((coshr2 * COSH_3_7 - coshr) / (sinhr2 * SINH_3_7));
   if (Number.isNaN(r * th2 * ph2)) {
     throw new Error(`problem input ${r}, ${th}, ${ph}`);
   }
@@ -148,7 +148,7 @@ function connect(nodes) {
 function walk(nodes) {
   const invalids = nodes.filter(
     ({ id, neighbours, spot }) =>
-      [id, neighbours, spot].some((x) => x) === undefined
+      [id, neighbours, spot].some((x) => x) === undefined,
   );
   if (invalids.length > 0) {
     invalids.forEach((node) => {
@@ -265,9 +265,11 @@ function draw(walls, size = 700) {
       const fails = wall.filter((x) => !(x instanceof Array));
       if (fails.length > 0) {
         throw new Error(
-          `Bad input ${fails
-            .map((fail) => `${fail}: ${typeof fail}`)
-            .join(", ")}`
+          `Bad input ${
+            fails
+              .map((fail) => `${fail}: ${typeof fail}`)
+              .join(", ")
+          }`,
         );
       }
       const coords = wall.map(([x, y]) => [
@@ -322,7 +324,7 @@ const Paths = {
         return Paths.appendAll(
           head.head.head,
           (head.head.tail + 6) % 7,
-          (tail + 6) % 7
+          (tail + 6) % 7,
         );
       case 2:
         //  x:2:3^n:2:y -> x-1:4^{n+1}:y-1
@@ -347,14 +349,14 @@ const Paths = {
           head.head.head,
           (head.head.tail + 1) % 7,
           2,
-          (tail + 1) % 7
+          (tail + 1) % 7,
         );
       case 6:
         // x:6:y => x+1:y+1
         return Paths.appendAll(
           head.head.head,
           (head.head.tail + 1) % 7,
-          (tail + 1) % 7
+          (tail + 1) % 7,
         );
       default:
         return candidate;

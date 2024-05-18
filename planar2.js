@@ -174,9 +174,8 @@ function folded(context, coords) {
   context.stroke();
 }
 
-function draw(size, unit, walls) {
-  const canvas = document.getElementById("world"),
-    context = canvas.getContext("2d");
+function draw(canvas, size, unit, walls) {
+  const context = canvas.getContext("2d");
 
   canvas.setAttribute("width", (size + 1) * unit);
   canvas.setAttribute("height", (size + 1) * unit);
@@ -205,13 +204,14 @@ function bias(i, j) {
   }
 }
 
-const grid = square(24, 5, bias);
-const walls = walk(grid);
-draw(grid.size, 14, walls);
+export function run(canvas) {
+  const grid = square(24, 5, bias);
+  const walls = walk(grid);
+  draw(canvas, grid.size, 14, walls);
+}
 
-function test() {
-  const canvas = document.getElementById("world"),
-    context = canvas.getContext("2d");
+function test(canvas) {
+  const context = canvas.getContext("2d");
 
   canvas.setAttribute("width", 202);
   canvas.setAttribute("height", 202);

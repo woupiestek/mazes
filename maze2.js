@@ -100,12 +100,11 @@ function walk(maxX, maxY) {
   return _passages;
 }
 
-function draw({ maxX, maxY, unit }, passages) {
+function draw(canvas, { maxX, maxY, unit }, passages) {
   function f(z) {
     return (z + 1) * unit;
   }
-  const canvas = document.getElementById("world"),
-    context = canvas.getContext("2d");
+  const context = canvas.getContext("2d");
 
   canvas.setAttribute("width", f(maxX + 1));
   canvas.setAttribute("height", f(maxY + 1));
@@ -222,11 +221,12 @@ function traverse(passages, document, context, { maxX, maxY, unit }) {
   );
 }
 
-const Config = {
-  maxX: 63,
-  maxY: 63,
-  unit: 10,
-};
-
-const p = walk(63, 63);
-traverse(p, document, draw(Config, p), Config);
+export function run(canvas) {
+  const Config = {
+    maxX: 63,
+    maxY: 63,
+    unit: 10,
+  };
+  const p = walk(63, 63);
+  traverse(p, document, draw(canvas, Config, p), Config);
+}

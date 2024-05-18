@@ -94,9 +94,8 @@ function walk({ maxX, maxY }) {
   return walls;
 }
 
-function draw({ maxX, maxY, unit }, walls) {
-  const canvas = document.getElementById("world"),
-    context = canvas.getContext("2d");
+function draw(canvas, { maxX, maxY, unit }, walls) {
+  const context = canvas.getContext("2d");
 
   canvas.setAttribute("width", maxX * unit + 2);
   canvas.setAttribute("height", maxY * unit + 2);
@@ -125,4 +124,6 @@ const Config = {
   unit: 5,
 };
 
-draw(Config, walk(Config));
+export function run(canvas) {
+  draw(canvas, Config, walk(Config));
+}

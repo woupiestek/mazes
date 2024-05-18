@@ -65,7 +65,7 @@ function coords(min, max, count) {
   };
 }
 
-(() => {
+export function run(canvas) {
   const walls = walk(3, 24, 0.99 * Math.PI);
 
   let min = 0,
@@ -74,11 +74,8 @@ function coords(min, max, count) {
     min = min > z ? z : min;
     max = max < z ? z : max;
   }
-  console.log(min, max);
 
-  const canvas = document.getElementById("world"),
-    context = canvas.getContext("2d");
-
+  const context = canvas.getContext("2d");
   canvas.setAttribute("width", 700);
   canvas.setAttribute("height", 700);
   context.fillStyle = "#000000";
@@ -95,7 +92,7 @@ function coords(min, max, count) {
     ]);
     folded(context, scaled);
   }
-})();
+}
 
 function folded(context, vecs) {
   context.beginPath();

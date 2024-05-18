@@ -331,7 +331,7 @@ function test() {
   return walls;
 }
 
-(() => {
+export function run(canvas) {
   const walls = walk2();
 
   let min = 0,
@@ -342,8 +342,7 @@ function test() {
   }
   console.log(min, max);
 
-  const canvas = document.getElementById("world"),
-    context = canvas.getContext("2d");
+  const context = canvas.getContext("2d");
 
   canvas.setAttribute("width", 700);
   canvas.setAttribute("height", 700);
@@ -361,7 +360,7 @@ function test() {
     ]);
     folded(context, scaled);
   }
-})();
+}
 
 function folded(context, vecs) {
   context.beginPath();

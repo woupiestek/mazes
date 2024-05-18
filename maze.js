@@ -95,9 +95,8 @@ function generateMaze({ maxX, maxY }) {
   return edges;
 }
 
-function draw({ maxX, maxY, unit }, edges) {
-  const canvas = document.getElementById("world"),
-    context = canvas.getContext("2d");
+function draw(canvas, { maxX, maxY, unit }, edges) {
+  const context = canvas.getContext("2d");
 
   canvas.setAttribute("width", maxX * unit + 1);
   canvas.setAttribute("height", maxY * unit + 1);
@@ -141,4 +140,6 @@ const Config = {
   unit: 10,
 };
 
-draw(Config, generateMaze(Config));
+export function run(canvas) {
+  draw(canvas, Config, generateMaze(Config));
+}

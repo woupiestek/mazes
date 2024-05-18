@@ -16,26 +16,24 @@ const SCRIPTS = [
 ];
 
 export class MazeCanvas extends LitElement {
-  static properties = {
-    script: { type: String },
-  };
+  async #onChange(e) {
+    const module = await import("./" + e.target.value);
+    if (module.run) {
+      module.run(this.shadowRoot.querySelector("canvas"));
+    }
+  }
 
   render() {
     return html`<label for="scripts">Script:</label>
-      <select
-        id="scripts"
-        name="scripts"
-        @change="${async (e) => {
-      this.script = e.target.value;
-      await import("./" + this.script);
-    }}"
-      ><option value="" disabled selected>Kies er één!</option>
+      <select id="scripts" name="scripts" @change="${(e) => this.#onChange(e)}">
+        <option value="" disabled selected>Kies er één!</option>
         ${
       SCRIPTS.map(
         (script) => html`<option value="${script}">${script}</option>`,
       )
-    }
-      </select>`;
+    }</select
+      ><br />
+      <canvas></canvas>`;
   }
 }
 

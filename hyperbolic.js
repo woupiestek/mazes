@@ -459,7 +459,7 @@ function tiling() {
       return node;
     });
 }
-const walls = walk(tiling());
-const walls2 = walk2();
-console.log(walls.length, walls2.length);
-drawArcs(walls2);
+
+export function run(canvas) {
+  drawArcs(canvas, walk2());
+}

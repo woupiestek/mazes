@@ -766,9 +766,8 @@ function folded(context, coords) {
   context.stroke();
 }
 
-function draw({ width, height, unit }, walls) {
-  const canvas = document.getElementById("world"),
-    context = canvas.getContext("2d");
+function draw(canvas, { width, height, unit }, walls) {
+  const context = canvas.getContext("2d");
 
   canvas.setAttribute("width", (width + 1) * unit);
   canvas.setAttribute("height", (height + 1) * unit + 2);
@@ -795,4 +794,6 @@ const Config = {
   unit: 14,
 };
 
-draw(Config, walk(spiral3(3, 24)));
+export function run(canvas) {
+  draw(canvas, Config, walk(spiral3(3, 24)));
+}

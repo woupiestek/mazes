@@ -149,4 +149,6 @@ function coordinates(walls) {
   );
 }
 
-drawArcs(coordinates(walk()));
+export function run(canvas) {
+  drawArcs(canvas, coordinates(walk()));
+}

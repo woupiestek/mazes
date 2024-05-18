@@ -63,9 +63,8 @@ function arc(x0, y0, x1, y1) {
   ];
 }
 
-export function drawArcs(walls, size = 700) {
-  const canvas = document.getElementById("world"),
-    context = canvas.getContext("2d");
+export function drawArcs(canvas, walls, size = 700) {
+  const context = canvas.getContext("2d");
 
   canvas.setAttribute("width", size);
   canvas.setAttribute("height", size);
@@ -129,5 +128,3 @@ function testWalls() {
   }
   return [arcs, arcs2, arcs3];
 }
-
-//drawArcs(testWalls());

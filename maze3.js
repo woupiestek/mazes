@@ -40,8 +40,8 @@ function walk({ maxX, maxY }) {
   let limit = 10 * maxX * maxY;
   let x,
     y,
-    neighbours,
-    walls = [];
+    neighbours;
+  const walls = [];
   a: while (nodes.length > 0 && limit-- > 0) {
     const index = randomInt(nodes.length);
     [x, y] = nodes[index];
@@ -55,7 +55,7 @@ function walk({ maxX, maxY }) {
       continue a;
     }
 
-    let path = [];
+    const path = [];
     b: while (limit-- > 0) {
       path.push([x, y]);
       neighbours = [];
@@ -109,7 +109,7 @@ function draw(canvas, { maxX, maxY, unit }, walls) {
       setTimeout(() => {
         context.beginPath();
         context.moveTo(x0 * unit + 1, y0 * unit + 1);
-        for (let p of t) {
+        for (const p of t) {
           context.lineTo(p[0] * unit + 1, p[1] * unit + 1);
         }
         context.stroke();

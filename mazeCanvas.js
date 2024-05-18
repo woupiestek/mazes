@@ -1,4 +1,4 @@
-import { html, LitElement } from "lit";
+import { css, html, LitElement } from "lit";
 
 const SCRIPTS = [
   "hyperbolic.js",
@@ -16,6 +16,20 @@ const SCRIPTS = [
 ];
 
 export class MazeCanvas extends LitElement {
+  static styles = [
+    css`
+      canvas {
+        margin: auto;
+      }
+      .container {
+        display: flex;
+      }
+      .menu {
+        background-color: #dddddd;
+        height: 700px;
+      }
+    `,
+  ];
   async #onChange(e) {
     const module = await import("./" + e.target.value);
     if (module.run) {
@@ -24,16 +38,24 @@ export class MazeCanvas extends LitElement {
   }
 
   render() {
-    return html`<label for="scripts">Script:</label>
-      <select id="scripts" name="scripts" @change="${(e) => this.#onChange(e)}">
-        <option value="" disabled selected>Kies er één!</option>
-        ${
+    return html`<div class="container">
+      <div class="menu">
+        <label for="scripts">Script:</label><br />
+        <select
+          id="scripts"
+          name="scripts"
+          @change="${(e) => this.#onChange(e)}"
+        >
+          <option value="" disabled selected>Kies er één!</option>
+          ${
       SCRIPTS.map(
         (script) => html`<option value="${script}">${script}</option>`,
       )
-    }</select
-      ><br />
-      <canvas></canvas>`;
+    }
+        </select>
+      </div>
+      <canvas tabindex="0"></canvas>
+    </div>`;
   }
 }
 

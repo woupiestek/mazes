@@ -429,7 +429,7 @@ function tiling() {
       if (key.length > 7) {
         continue;
       }
-      let node = nodes[key];
+      const node = nodes[key];
       if (node) {
         neighbours.push(node);
       } else {

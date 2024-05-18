@@ -186,32 +186,36 @@ function traverse(passages, document, context, { maxX, maxY, unit }) {
         (unit * 3) / 5,
       );
       switch (code) {
-        case "ArrowUp":
+        case "ArrowUp": {
           if (passages.isClosed(x, y, "up")) {
             break;
           }
           y = (y === 0 ? maxY : y) - step;
           break;
-        case "ArrowRight":
-          let x2 = x + step === maxX ? 0 : x + step;
+        }
+        case "ArrowRight": {
+          const x2 = x + step === maxX ? 0 : x + step;
           if (passages.isClosed(x2, y, "left")) {
             break;
           }
           x = x2;
           break;
-        case "ArrowDown":
-          let y2 = y + step === maxY ? 0 : y + step;
+        }
+        case "ArrowDown": {
+          const y2 = y + step === maxY ? 0 : y + step;
           if (passages.isClosed(x, y2, "up")) {
             break;
           }
           y = y2;
           break;
-        case "ArrowLeft":
+        }
+        case "ArrowLeft": {
           if (passages.isClosed(x, y, "left")) {
             break;
           }
           x = (x === 0 ? maxX : x) - step;
           break;
+        }
         default:
           return;
       }
@@ -228,5 +232,5 @@ export function run(canvas) {
     unit: 10,
   };
   const p = walk(63, 63);
-  traverse(p, document, draw(canvas, Config, p), Config);
+  traverse(p, canvas, draw(canvas, Config, p), Config);
 }

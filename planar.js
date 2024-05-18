@@ -76,7 +76,7 @@ function swing(inner, outer, factor = 0.5) {
       }
       if (nodes[i - 1]) {
         node2 = nodes[i - 1][j + 1];
-        let blocked = Math.random() < factor;
+        const blocked = Math.random() < factor;
         if (node2 && blocked) {
           connect(node, node2);
           node.x -= yank;
@@ -518,7 +518,7 @@ function spiral3(inner, outer, count = 3, distance = 3 / Math.PI) {
   return nodes.flat();
 }
 
-function elipticSpiral(radius, limit = Math.PI / 16, count = 3) {
+function elipticSpiral(_, radius, limit = Math.PI / 16, count = 3) {
   const nodes = [];
   const area = (TAU * radius * radius) / count;
   const dphi = (TAU * radius) / count;
@@ -548,7 +548,7 @@ function elipticSpiral(radius, limit = Math.PI / 16, count = 3) {
   return nodes.flat();
 }
 
-function elipticSpiral2(radius, inner = 4, armCount = 3) {
+function elipticSpiral2(inner, radius, armCount = 3) {
   const cellHeight = Math.PI / (2 * radius);
   const cellWidth = cellHeight;
 
@@ -624,7 +624,7 @@ function square2(inner, outer, threshold = 1 / 4, distance = 1 / 4) {
   return nodes.flat();
 }
 
-function hyperbolicDisc(radius, div = 64 / TAU) {
+function hyperbolicDisc(_, radius, div = 64 / TAU) {
   const nodes = [];
   const circ = [];
 
@@ -660,7 +660,7 @@ function rad(area) {
   return 1 / Math.sqrt(1 + Math.PI / area);
 }
 
-function hyperbolicSpiral(radius, armCount = 3) {
+function hyperbolicSpiral(_, radius, armCount = 3) {
   const deltaD = TAU / 64;
   const deltaA = deltaD * deltaD * armCount;
   const maxI = ((1 << 12) / armCount) | 0;
@@ -710,7 +710,7 @@ function walk(nodes) {
     if (node.state === State.DONE) {
       continue;
     }
-    let wall = [];
+    const wall = [];
     b: while (true) {
       wall.push(node);
       const neighbours = Object.values(node.neighbours).filter(
@@ -777,7 +777,7 @@ function draw(canvas, { width, height, unit }, walls) {
   context.lineJoin = "round";
 
   let i = 0;
-  for (let wall of walls) {
+  for (const wall of walls) {
     if (wall.length > 1) {
       i += wall.length - 1;
       const coords = wall.map(({ x, y }) => [(x + 1) * unit, (y + 1) * unit]);
@@ -794,6 +794,29 @@ const Config = {
   unit: 14,
 };
 
+let index = 0;
+const GENERATORS = [
+  cairo2,
+  cairo3,
+  disc,
+  elipticSpiral,
+  elipticSpiral2,
+  hexagon2,
+  hexagon3,
+  hexagons,
+  hyperbolicDisc,
+  hyperbolicSpiral,
+  snubSquare,
+  spiral2,
+  spiral3,
+  square,
+  square2,
+  swing,
+  tetrakis,
+  triangle,
+];
 export function run(canvas) {
-  draw(canvas, Config, walk(spiral3(3, 24)));
+  const nodes = GENERATORS[index++](3, 24);
+  index %= GENERATORS.length;
+  draw(canvas, Config, walk(nodes));
 }

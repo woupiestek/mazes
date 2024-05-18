@@ -85,7 +85,7 @@ export function run(canvas) {
 
   const scale = 690 / (max - min);
 
-  for (let wall of walls) {
+  for (const wall of walls) {
     const scaled = wall.map(([x, y]) => [
       5 + (x - min) * scale,
       5 + (y - min) * scale,

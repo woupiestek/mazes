@@ -776,12 +776,10 @@ function draw(canvas, { width, height, unit }, walls) {
   context.lineCap = "round";
   context.lineJoin = "round";
 
-  let i = 0;
   for (const wall of walls) {
     if (wall.length > 1) {
-      i += wall.length - 1;
       const coords = wall.map(({ x, y }) => [(x + 1) * unit, (y + 1) * unit]);
-      setTimeout(() => folded(context, coords), i);
+      folded(context, coords);
     }
   }
 }

@@ -127,10 +127,7 @@ function draw(canvas, { maxX, maxY, unit }, edges) {
   }
 
   for (let i = 0, l = frames.length; i < l; i++) {
-    setTimeout(
-      () => frames[i]?.forEach(([a, b, c, d]) => context.fillRect(a, b, c, d)),
-      i * 60,
-    );
+    frames[i]?.forEach(([a, b, c, d]) => context.fillRect(a, b, c, d));
   }
 }
 

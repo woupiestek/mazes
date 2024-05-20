@@ -106,14 +106,12 @@ function draw(canvas, { maxX, maxY, unit }, walls) {
   for (let i = 0, l = walls.length; i < l; i++) {
     const [[x0, y0], ...t] = walls[i];
     if (t.length > 0) {
-      setTimeout(() => {
-        context.beginPath();
-        context.moveTo(x0 * unit + 1, y0 * unit + 1);
-        for (const p of t) {
-          context.lineTo(p[0] * unit + 1, p[1] * unit + 1);
-        }
-        context.stroke();
-      }, i);
+      context.beginPath();
+      context.moveTo(x0 * unit + 1, y0 * unit + 1);
+      for (const p of t) {
+        context.lineTo(p[0] * unit + 1, p[1] * unit + 1);
+      }
+      context.stroke();
     }
   }
 }

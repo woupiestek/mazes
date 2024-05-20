@@ -184,11 +184,9 @@ function draw(canvas, size, unit, walls) {
   context.lineJoin = "round";
   context.lineWidth = unit / 3;
 
-  let t = 0;
   for (const wall of walls) {
-    t += wall.length;
     const coords = wall.map(({ x, y }) => [(x + 1) * unit, (y + 1) * unit]);
-    setTimeout(() => bezier(context, coords), t);
+    bezier(context, coords);
   }
 }
 

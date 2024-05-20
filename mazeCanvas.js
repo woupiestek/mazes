@@ -25,34 +25,37 @@ export class MazeCanvas extends LitElement {
         display: flex;
       }
       .menu {
+        display: flex;
+        flex-direction: column;
         background-color: #dddddd;
         height: 700px;
       }
     `,
   ];
+
   async #onChange(e) {
-    const module = await import("./" + e.target.value);
-    if (module.run) {
-      module.run(this.shadowRoot.querySelector("canvas"));
+    this.__module = await import("./" + e.target.value);
+    this.#onClick();
+  }
+  #onClick() {
+    if (this.__module?.run) {
+      this.__module.run(this.shadowRoot.querySelector("canvas"));
     }
   }
-
   render() {
     return html`<div class="container">
       <div class="menu">
-        <label for="scripts">Script:</label><br />
+        <label for="scripts">Script:</label>
         <select
           id="scripts"
           name="scripts"
           @change="${(e) => this.#onChange(e)}"
         >
           <option value="" disabled selected>Kies er één!</option>
-          ${
-      SCRIPTS.map(
-        (script) => html`<option value="${script}">${script}</option>`,
-      )
-    }
-        </select>
+          ${SCRIPTS.map(
+            (script) => html`<option value="${script}">${script}</option>`
+          )}</select
+        ><button @click=${() => this.#onClick()}>run</button>
       </div>
       <canvas tabindex="0"></canvas>
     </div>`;

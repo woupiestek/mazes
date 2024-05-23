@@ -26,10 +26,11 @@ function init({ maxX, maxY }) {
     grid[x] = [];
     for (let y = 0; y <= maxY; y++) {
       nodes.push([x, y]);
-      grid[x][y] = (2 * x - maxX) * (2 * x - maxX) < 100 &&
-          (2 * y - maxY) * (2 * y - maxY) < 100
-        ? State.DONE
-        : State.RAW;
+      grid[x][y] =
+        (2 * x - maxX) * (2 * x - maxX) < 100 &&
+        (2 * y - maxY) * (2 * y - maxY) < 100
+          ? State.DONE
+          : State.RAW;
     }
   }
   return { grid, nodes };
@@ -38,9 +39,7 @@ function init({ maxX, maxY }) {
 function walk({ maxX, maxY }) {
   const { grid, nodes } = init({ maxX, maxY });
   let limit = 10 * maxX * maxY;
-  let x,
-    y,
-    neighbours;
+  let x, y, neighbours;
   const walls = [];
   a: while (nodes.length > 0 && limit-- > 0) {
     const index = randomInt(nodes.length);

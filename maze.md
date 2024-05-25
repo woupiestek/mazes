@@ -1,5 +1,25 @@
 # Maze
 
+## 2024-05-25
+
+### analysis
+
+The mazers take the following steps:
+
+- generate a planar graph.
+- walk the graph and select paths to serve as walls.
+- draw the walls on the canvas.
+
+The last one is mostly separated out, though not to the extent that different
+generators can easily exchange their draw functions.
+
+### maze 4
+
+The main new idea here is for the walls to keep a distance, which creates room
+for a more organic placement of the walls: there many staircased walls and
+spontaneous rooms, to break up the straigtness of ordinary mazes. This comes
+after several attempts based on discs and spirals, and alternative tilings.
+
 ## 2024-05-17
 
 ### updates

@@ -26,11 +26,10 @@ function init({ maxX, maxY }) {
     grid[x] = [];
     for (let y = 0; y <= maxY; y++) {
       nodes.push([x, y]);
-      grid[x][y] =
-        (2 * x - maxX) * (2 * x - maxX) < 100 &&
-        (2 * y - maxY) * (2 * y - maxY) < 100
-          ? State.DONE
-          : State.RAW;
+      grid[x][y] = (2 * x - maxX) * (2 * x - maxX) < 100 &&
+          (2 * y - maxY) * (2 * y - maxY) < 100
+        ? State.DONE
+        : State.RAW;
     }
   }
   return { grid, nodes };

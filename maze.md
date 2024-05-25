@@ -20,6 +20,12 @@ for a more organic placement of the walls: there many staircased walls and
 spontaneous rooms, to break up the straigtness of ordinary mazes. This comes
 after several attempts based on discs and spirals, and alternative tilings.
 
+### maze 5
+
+Applying the same idea to various other tilings. Especialy the circular and
+spriral ones give the impression of walls being randomly placed, though they
+still produce a maze.
+
 ## 2024-05-17
 
 ### updates

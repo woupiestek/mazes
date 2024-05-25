@@ -18,3 +18,10 @@
   }
   return `${n} / ${d}`;
 }
+
+export function sample(array) {
+  if (!array?.length) {
+    return undefined;
+  }
+  return array[Math.floor(Math.random() * array.length)];
+}

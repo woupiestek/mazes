@@ -2,14 +2,13 @@ import { css, html, LitElement } from "lit";
 
 const SCRIPTS = [
   "hyperbolic.js",
-  // "hyperbolic2.js",
   "hyperbolic3.js",
-  // "hyperbolic4.js",
   "hyperbolic5.js",
   "maze.js",
   "maze2.js",
   "maze3.js",
   "maze4.js",
+  "maze5.js",
   "planar.js",
   "planar2.js",
   "spiral.js",

@@ -1,9 +1,4 @@
-function sample(array) {
-  if (!array?.length) {
-    return undefined;
-  }
-  return array[Math.floor(Math.random() * array.length)];
-}
+import { sample } from "./util.js";
 
 class Weights {
   #weights = [];
@@ -68,7 +63,7 @@ function walk({ maxX, maxY }) {
         [x, y - 1],
         [x + 1, y],
         [x, y + 1],
-      ].filter((node) => weights.isOpen(node))
+      ].filter((node) => weights.isOpen(node)),
     );
     if (!next) {
       if (wall.length > 1) {

@@ -100,7 +100,7 @@ function draw(canvas, { maxX, maxY, unit }, edges) {
 
   canvas.setAttribute("width", maxX * unit + 1);
   canvas.setAttribute("height", maxY * unit + 1);
-  context.strokeStyle= "#663399";
+  context.strokeStyle = "#663399";
   context.lineCap = "round";
   context.lineJoin = "round";
 

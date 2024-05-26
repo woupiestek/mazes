@@ -97,7 +97,7 @@ function draw(canvas, { maxX, maxY, unit }, walls) {
 
   canvas.setAttribute("width", maxX * unit + 2);
   canvas.setAttribute("height", maxY * unit + 2);
-  context.strokeStyle= "#663399";
+  context.strokeStyle = "#663399";
   context.lineCap = "round";
   context.lineJoin = "round";
 

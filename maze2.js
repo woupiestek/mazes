@@ -109,7 +109,7 @@ function draw(canvas, { maxX, maxY, unit }, passages) {
   canvas.setAttribute("width", f(maxX + 1));
   canvas.setAttribute("height", f(maxY + 1));
   context.lineWidth = unit / 4;
-  context.strokeStyle= "#663399";
+  context.strokeStyle = "#663399";
   context.lineCap = "round";
   context.lineJoin = "round";
 

@@ -346,7 +346,7 @@ export function run(canvas) {
 
   canvas.setAttribute("width", 700);
   canvas.setAttribute("height", 700);
-  context.strokeStyle= "#663399";
+  context.strokeStyle = "#663399";
   context.lineWidth = 1;
   context.lineCap = "round";
   context.lineJoin = "round";

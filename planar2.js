@@ -179,7 +179,7 @@ function draw(canvas, size, unit, walls) {
 
   canvas.setAttribute("width", (size + 1) * unit);
   canvas.setAttribute("height", (size + 1) * unit);
-  context.fillStyle = "#000000";
+  context.strokeStyle= "#663399";
   context.lineCap = "round";
   context.lineJoin = "round";
   context.lineWidth = unit / 3;
@@ -213,7 +213,7 @@ function test(canvas) {
 
   canvas.setAttribute("width", 202);
   canvas.setAttribute("height", 202);
-  context.fillStyle = "#000000";
+  context.strokeStyle= "#663399";
   context.lineCap = "round";
   context.lineJoin = "round";
 

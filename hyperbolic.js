@@ -255,7 +255,7 @@ function draw(walls, size = 700) {
 
   canvas.setAttribute("width", size);
   canvas.setAttribute("height", size);
-  context.fillStyle = "#000000";
+  context.strokeStyle= "#663399";
   context.lineWidth = 1;
   context.lineCap = "round";
   context.lineJoin = "round";

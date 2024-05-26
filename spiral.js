@@ -78,7 +78,7 @@ export function run(canvas) {
   const context = canvas.getContext("2d");
   canvas.setAttribute("width", 700);
   canvas.setAttribute("height", 700);
-  context.fillStyle = "#000000";
+  context.strokeStyle= "#663399";
   context.lineWidth = 1;
   context.lineCap = "round";
   context.lineJoin = "round";

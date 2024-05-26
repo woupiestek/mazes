@@ -1,6 +1,7 @@
 import { sample } from "./util.js";
 
 class Node {
+  color = "#333333";
   weight = 0;
   neighbours = [];
 
@@ -8,15 +9,17 @@ class Node {
     this.x = x;
     this.y = y;
     for (const node of neighbours) {
-      if (!(node instanceof Node)) {
-        throw new Error(`bad neighbour ${node} at (${x}, ${y})`);
+      if (node && !this.neighbours.includes(node)) {
+        node.neighbours.push(this);
+        this.neighbours.push(node);
       }
-      node.neighbours.push(this);
     }
     if (neighbours == undefined) {
       throw new Error(`how?`);
     }
-    this.neighbours = neighbours;
+    if (neighbours == undefined) {
+      throw new Error(`how?`);
+    }
   }
 
   isOpen() {
@@ -48,6 +51,7 @@ class Node {
         }
         continue;
       }
+      next.color = current.color;
       next.close();
       wall.push(next);
       nodes.push(next);
@@ -63,7 +67,6 @@ function draw(canvas, walls) {
 
   canvas.setAttribute("width", 702);
   canvas.setAttribute("height", 702);
-  context.fillStyle = "#000000";
   context.lineCap = "round";
   context.lineJoin = "round";
   context.lineWidth = 4;
@@ -71,6 +74,7 @@ function draw(canvas, walls) {
   for (let i = 0, l = walls.length; i < l; i++) {
     const [h, ...t] = walls[i];
     if (t.length > 0) {
+      context.strokeStyle = h.color;
       context.beginPath();
       context.moveTo(CENTER + UNIT * h.x, CENTER + UNIT * h.y);
       for (const p of t) {
@@ -129,10 +133,28 @@ function triangles() {
       );
     }
   }
-  return [nodes[50][49], nodes[50][51]];
+  nodes[49][50].color = "#993333";
+  nodes[50][49].color = "#333399";
+  nodes[51][51].color = "#339933";
+  return [nodes[49][50], nodes[50][49], nodes[51][51]];
 }
 
-function discs() {
+function squares(size = 49) {
+  const nodes = [];
+  for (let i = -size; i <= size; i++) {
+    nodes[i] = [];
+    for (let j = -size; j <= size; j++) {
+      nodes[i][j] = new Node(i, j, nodes[i - 1]?.[j], nodes[i][j - 1]);
+    }
+  }
+  nodes[-1][-1].color = "#996633";
+  nodes[-1][1].color = "#663366";
+  nodes[1][-1].color = "#339933";
+  nodes[1][1].color = "#336699";
+  return [nodes[-1][-1], nodes[-1][1], nodes[1][-1], nodes[1][1]];
+}
+
+function disc() {
   const r0 = Math.sqrt(0.5);
   const nodes = [[new Node(+r0)]];
   nodes[0][1] = new Node(0, +r0, nodes[0][0]);
@@ -148,22 +170,13 @@ function discs() {
     for (let j = 1; j < l - 1; j++) {
       const jLow = Math.ceil(((j - 1) * l0) / l);
       const jHigh = Math.floor(((j + 1) * l0) / l) % l0;
-      if (jLow === jHigh) {
-        nodes[i][j] = new Node(
-          r * Math.cos(th * j),
-          r * Math.sin(th * j),
-          nodes[i][j - 1],
-          nodes[i - 1][jLow]
-        );
-      } else {
-        nodes[i][j] = new Node(
-          r * Math.cos(th * j),
-          r * Math.sin(th * j),
-          nodes[i][j - 1],
-          nodes[i - 1][jLow],
-          nodes[i - 1][jHigh]
-        );
-      }
+      nodes[i][j] = new Node(
+        r * Math.cos(th * j),
+        r * Math.sin(th * j),
+        nodes[i][j - 1],
+        nodes[i - 1][jLow],
+        nodes[i - 1][jHigh]
+      );
     }
     nodes[i][l - 1] = new Node(
       r * Math.cos(th * (l - 1)),
@@ -174,14 +187,17 @@ function discs() {
       nodes[i - 1][l0 - 1]
     );
   }
+  nodes[0][0].color = "#996633";
+  nodes[0][2].color = "#336699";
   return [nodes[0][0], nodes[0][2]];
 }
 
-function discs2() {
-  const size = 57;
+function disc2() {
   const counts = [];
+  const dSize = Math.PI * Math.sqrt(3);
+  const size = Math.floor((100 * Math.PI) / dSize);
   for (let i = size; i > 0; i--) {
-    const l = Math.floor(i * Math.PI * Math.sqrt(3));
+    const l = Math.floor(i * dSize);
     counts.push(l);
   }
 
@@ -214,22 +230,13 @@ function discs2() {
       const k = (j * counts[i - 1]) / counts[i];
       const kLow = Math.floor(k);
       const kHigh = Math.ceil(k) % counts[i - 1];
-      if (kLow === kHigh) {
-        nodes[i][j] = new Node(
-          r * Math.cos(dth * j),
-          r * Math.sin(dth * j),
-          nodes[i][j - 1],
-          nodes[i - 1][kLow]
-        );
-      } else {
-        nodes[i][j] = new Node(
-          r * Math.cos(dth * j),
-          r * Math.sin(dth * j),
-          nodes[i][j - 1],
-          nodes[i - 1][kLow],
-          nodes[i - 1][kHigh]
-        );
-      }
+      nodes[i][j] = new Node(
+        r * Math.cos(dth * j),
+        r * Math.sin(dth * j),
+        nodes[i][j - 1],
+        nodes[i - 1][kLow],
+        nodes[i - 1][kHigh]
+      );
     }
     nodes[i][counts[i] - 1] = new Node(
       r * Math.cos(dth * (counts[i] - 1)),
@@ -240,35 +247,54 @@ function discs2() {
       nodes[i - 1][counts[i - 1] - 2]
     );
   }
+  nodes[49][0].color = "#996633";
+  nodes[49][counts[49] >> 1].color = "#336699";
   return [nodes[49][0], nodes[49][counts[49] >> 1]];
 }
 
-const DTH = (2 * Math.PI) / 1;
+const FACTOR = 4 / 29;
 function spiral() {
   const nodes = [new Node(0, 0)];
   for (let i = 1; ; i++) {
-    const r = Math.sqrt(i / Math.PI);
-    if (r >= 50) {
+    const th = 2 * Math.sqrt(i * Math.PI);
+    if (FACTOR * th >= 50) {
       break;
     }
-    const th = r * DTH;
-    if (r < 1) {
-      nodes[i] = new Node(r * Math.cos(th), r * Math.sin(th), nodes[i - 1]);
-      continue;
-    }
-    const j = i - 2 * Math.sqrt(i * Math.PI) + Math.PI;
+    const j = i - th + Math.PI;
     nodes[i] = new Node(
-      r * Math.cos(th),
-      r * Math.sin(th),
+      FACTOR * th * Math.cos(th),
+      FACTOR * th * Math.sin(th),
       nodes[i - 1],
       nodes[Math.floor(j)],
       nodes[Math.ceil(j)]
     );
   }
+  nodes[1].color = "#996633";
+  nodes[4].color = "#336699";
   return [nodes[1], nodes[4]];
 }
 
-const GENERATORS = [discs2, spiral, discs, triangles];
+function spiral2() {
+  const max = Math.floor(625 / FACTOR / FACTOR / Math.PI);
+  console.log(max);
+  const nodes = [];
+  for (let i = max; i >= 0; i--) {
+    const th = 2 * Math.sqrt(i * Math.PI);
+    const j = i + Math.PI + th;
+    nodes[i] = new Node(
+      FACTOR * th * Math.cos(th),
+      FACTOR * th * Math.sin(th),
+      nodes[i + 1],
+      nodes[Math.floor(j)],
+      nodes[Math.ceil(j)]
+    );
+  }
+  nodes[1].color = "#996633";
+  nodes[4].color = "#336699";
+  return [nodes[1], nodes[4]];
+}
+
+const GENERATORS = [squares, spiral2, disc2, spiral, disc, triangles];
 let index = 0;
 export function run(canvas) {
   const nodes = GENERATORS[index++]();

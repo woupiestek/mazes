@@ -108,7 +108,7 @@ function triangles() {
         j + sign / 4,
         nodes[i][j - 1],
         nodes[i - 1]?.[j],
-        nodes[i - 1]?.[j + sign]
+        nodes[i - 1]?.[j + sign],
       );
     }
   }
@@ -144,7 +144,7 @@ function squares2(size = 49) {
         nodes[i - 1]?.[j - 1],
         nodes[i - 1]?.[j],
         nodes[i - 1]?.[j + 1],
-        nodes[i][j - 1]
+        nodes[i][j - 1],
       );
     }
   }
@@ -168,14 +168,14 @@ function squares3(size = 49) {
           j + E * sign,
           nodes[i - 1]?.[j],
           nodes[i - 1]?.[j + sign],
-          nodes[i][j - 1]
+          nodes[i][j - 1],
         );
       } else {
         nodes[i][j] = new Node(
           i + E,
           j + E * sign,
           nodes[i - 1]?.[j],
-          nodes[i][j - 1]
+          nodes[i][j - 1],
         );
       }
     }
@@ -184,6 +184,92 @@ function squares3(size = 49) {
   nodes[-1][1].color = "#993399";
   nodes[1][-1].color = "#339933";
   nodes[1][1].color = "#336699";
+  return [nodes[-1][-1], nodes[-1][1], nodes[1][-1], nodes[1][1]];
+}
+
+const K = (4 - Math.sqrt(7)) / 3;
+const M = [
+  [0, 1, 0, 2],
+  [3, 4, 5, 6],
+  [0, 2, 0, 1],
+  [5, 6, 3, 4],
+];
+function squares4(size = 49) {
+  const nodes = [];
+  for (let i = -size; i <= size; i++) {
+    nodes[i] = [];
+    const ti = i & 3;
+    for (let j = -size; j <= size; j++) {
+      switch (M[ti][j & 3]) {
+        case 0:
+          nodes[i][j] = new Node(i, j, nodes[i - 1]?.[j], nodes[i][j - 1]);
+          continue;
+        case 1:
+          nodes[i][j] = new Node(i + K, j, nodes[i][j - 1]);
+          continue;
+        case 2:
+          nodes[i][j] = new Node(i - K, j, nodes[i - 1]?.[j], nodes[i][j - 1]);
+          continue;
+        case 3:
+          nodes[i][j] = new Node(i, j - K, nodes[i - 1]?.[j], nodes[i][j - 1]);
+          continue;
+        case 4:
+          nodes[i][j] = new Node(i, j, nodes[i - 1]?.[j]);
+          continue;
+        case 5:
+          nodes[i][j] = new Node(i, j + K, nodes[i - 1]?.[j]);
+          continue;
+        case 6:
+          nodes[i][j] = new Node(i, j, nodes[i][j - 1]);
+          continue;
+      }
+    }
+  }
+  nodes[-1][-1].color = "#996633";
+  nodes[-1][1].color = "#993399";
+  nodes[1][-1].color = "#339933";
+  nodes[1][1].color = "#336699";
+  return [nodes[-1][-1], nodes[-1][1], nodes[1][-1], nodes[1][1]];
+}
+
+function squares5(size = 49) {
+  const nodes = [];
+  for (let i = -size; i <= size; i++) {
+    nodes[i] = [];
+    for (let j = -size; j <= size; j++) {
+      const r = Math.sqrt(i * i + j * j);
+      const f = Math.round(r) / r;
+      const k = i * j;
+      if (k < 0) {
+        nodes[i][j] = new Node(
+          f * i,
+          f * j,
+          nodes[i - 1]?.[j],
+          nodes[i - 1]?.[j - 1],
+          nodes[i][j - 1],
+        );
+      } else if (k > 0) {
+        nodes[i][j] = new Node(
+          f * i,
+          f * j,
+          nodes[i - 1]?.[j],
+          nodes[i - 1]?.[j + 1],
+          nodes[i][j - 1],
+        );
+      } else {
+        nodes[i][j] = new Node(
+          f * i,
+          f * j,
+          nodes[i - 1]?.[j],
+          nodes[i][j - 1],
+        );
+      }
+    }
+  }
+  nodes[-1][-1].color = "#663399";
+  nodes[-1][1].color = "#993366";
+  nodes[1][-1].color = "#339966";
+  nodes[1][1].color = "#669933";
   return [nodes[-1][-1], nodes[-1][1], nodes[1][-1], nodes[1][1]];
 }
 
@@ -199,7 +285,7 @@ function hexagons(size = 24) {
           2 * i - 1 / 3,
           ETH * j,
           nodes[i - 1]?.[j],
-          nodes[i][j - 1]
+          nodes[i][j - 1],
         );
       } else {
         nodes[i][j] = new Node(2 * i + 1 / 3, ETH * j, nodes[i][j - 1]);
@@ -224,7 +310,7 @@ function disc() {
         r * Math.sin(j / r),
         nodes[i][j - 1],
         nodes[i - 1]?.[Math.floor(k)],
-        nodes[i - 1]?.[Math.ceil(k)]
+        nodes[i - 1]?.[Math.ceil(k)],
       );
     }
     nodes[i][0] = new Node(
@@ -232,7 +318,7 @@ function disc() {
       0,
       nodes[i][6 * i - 1],
       nodes[i][1],
-      nodes[i - 1]?.[0]
+      nodes[i - 1]?.[0],
     );
   }
   nodes[1][0].color = "#993333";
@@ -260,14 +346,14 @@ function disc2() {
       nodes[0][j] = new Node(
         r * Math.cos(dth * j),
         r * Math.sin(dth * j),
-        nodes[0][j - 1]
+        nodes[0][j - 1],
       );
     }
     nodes[0][counts[0] - 1] = new Node(
       r * Math.cos(dth * (counts[0] - 1)),
       r * Math.sin(dth * (counts[0] - 1)),
       nodes[0][counts[0] - 2],
-      nodes[0][0]
+      nodes[0][0],
     );
   }
 
@@ -285,7 +371,7 @@ function disc2() {
         r * Math.sin(dth * j),
         nodes[i][j - 1],
         nodes[i - 1][kLow],
-        nodes[i - 1][kHigh]
+        nodes[i - 1][kHigh],
       );
     }
     nodes[i][counts[i] - 1] = new Node(
@@ -294,7 +380,7 @@ function disc2() {
       nodes[i][counts[i] - 2],
       nodes[i][0],
       nodes[i - 1][counts[i - 1] - 1],
-      nodes[i - 1][counts[i - 1] - 2]
+      nodes[i - 1][counts[i - 1] - 2],
     );
   }
   nodes[49][0].color = "#996633";
@@ -305,7 +391,7 @@ function disc2() {
 const FACTOR = 4 / 29;
 function spiral() {
   const nodes = [new Node(0, 0)];
-  for (let i = 1; ; i++) {
+  for (let i = 1;; i++) {
     const th = 2 * Math.sqrt(i * Math.PI);
     if (FACTOR * th >= 50) {
       break;
@@ -316,7 +402,7 @@ function spiral() {
       FACTOR * th * Math.sin(th),
       nodes[i - 1],
       nodes[Math.floor(j)],
-      nodes[Math.ceil(j)]
+      nodes[Math.ceil(j)],
     );
   }
   nodes[1].color = "#996633";
@@ -335,7 +421,7 @@ function spiral2() {
       FACTOR * th * Math.sin(th),
       nodes[i + 1],
       nodes[Math.floor(j)],
-      nodes[Math.ceil(j)]
+      nodes[Math.ceil(j)],
     );
   }
   nodes[1].color = "#996633";
@@ -379,8 +465,8 @@ function chaos() {
               nodes[i][j],
             ]
               .flatMap((it) => it || [])
-              .filter((it) => it.distance(x, y) <= 1.5)
-          )
+              .filter((it) => it.distance(x, y) <= 1.5),
+          ),
         );
       }
     }
@@ -403,6 +489,8 @@ const GENERATORS = [
   squares,
   squares2,
   squares3,
+  squares4,
+  squares5,
   triangles,
 ];
 let index = 0;

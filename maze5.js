@@ -1,4 +1,4 @@
-import { sample } from "./util.js";
+import { sample, shuffle } from "./util.js";
 
 class Node {
   color = "#333333";
@@ -36,6 +36,7 @@ class Node {
   static walk(nodes) {
     nodes.forEach((node) => node.close());
     const nursery = nodes.map((node) => [node]);
+    const reserve = nodes.map(() => []);
     const walls = [];
     for (let i = 0; nursery.length > 0; i = (i + 1) % nursery.length) {
       const wall = nursery[i];
@@ -45,19 +46,20 @@ class Node {
         if (wall.length > 1) {
           walls.push(wall);
         }
-        if (nodes.length) {
-          nursery[i] = [nodes.shift()];
-        } else if (i === nursery.length - 1) {
-          nursery.pop();
+        if (reserve[i].length) {
+          nursery[i] = [reserve[i].pop()];
         } else {
-          nursery[i] = nursery.pop();
+          nursery[i] = nursery[nursery.length - 1];
+          reserve[i] = reserve[nursery.length - 1];
+          nursery.length--;
+          reserve.length--;
         }
         continue;
       }
       next.color = current.color;
       next.close();
       wall.push(next);
-      nodes.push(next);
+      reserve[i].push(next);
     }
     return walls;
   }
@@ -115,6 +117,37 @@ function triangles() {
     nodes[-iSize][jSize],
     nodes[iSize][-jSize],
     nodes[iSize][jSize],
+  ];
+}
+
+function triangles2(size = 49) {
+  const nodes = [];
+  for (let i = -size; i <= size; i++) {
+    nodes[i] = [];
+    for (let j = -size; j <= size; j++) {
+      if (i - j > size || j - i > size) continue;
+      nodes[i][j] = new Node(
+        (i + j) / 2,
+        ((j - i) * Math.sqrt(3)) / 2,
+        nodes[i - 1]?.[j],
+        nodes[i - 1]?.[j - 1],
+        nodes[i][j - 1]
+      );
+    }
+  }
+  nodes[-size][-size].color = "hsl(30,67%,33%)";
+  nodes[-size][0].color = "hsl(90,67%,33%)";
+  nodes[0][size].color = "hsl(150,67%,33%)";
+  nodes[size][size].color = "hsl(210,67%,33%)";
+  nodes[size][0].color = "hsl(270,67%,33%)";
+  nodes[0][-size].color = "hsl(330,67%,33%)";
+  return [
+    nodes[-size][-size],
+    nodes[-size][0],
+    nodes[0][size],
+    nodes[size][size],
+    nodes[size][0],
+    nodes[0][-size],
   ];
 }
 
@@ -441,7 +474,7 @@ function chaos() {
       .filter((it) => it)
       .flatMap((it) => it.filter((node) => node.distance(x, y) <= 1));
     const node = new Node(x, y, ...neighbours);
-    if (x * x + y * y < 4500) {
+    if (x * x + y * y < 4000) {
       if (x + y < bl.x + bl.y) {
         bl = node;
       }
@@ -465,6 +498,7 @@ function chaos() {
 }
 
 const GENERATORS = [
+  triangles2,
   chaos,
   disc,
   disc2,

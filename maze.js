@@ -1,21 +1,7 @@
+import { sample} from './util.js';
+
 function randomInt(max = Number.MAX_SAFE_INTEGER) {
   return (Math.random() * max) | 0;
-}
-
-function sample(array) {
-  if (array.length > 0) {
-    return array[randomInt(array.length)];
-  }
-}
-
-function shuffle(array) {
-  let j, element;
-  for (let i = array.length - 1; i >= 0; i--) {
-    j = randomInt(i);
-    element = array[i];
-    array[i] = array[j];
-    array[j] = element;
-  }
 }
 
 function generateMaze({ maxX, maxY }) {
@@ -98,36 +84,57 @@ function generateMaze({ maxX, maxY }) {
 function draw(canvas, { maxX, maxY, unit }, edges) {
   const context = canvas.getContext("2d");
 
-  canvas.setAttribute("width", maxX * unit + 1);
-  canvas.setAttribute("height", maxY * unit + 1);
+  canvas.setAttribute("width", (maxX + 1) * unit);
+  canvas.setAttribute("height", (maxY + 1) * unit);
   context.strokeStyle = "#663399";
   context.lineCap = "round";
   context.lineJoin = "round";
+  context.lineWidth = 4;
 
-  frames = [];
-  for (const [x, y, r, t] of edges) {
-    const i = (t / 60) | 0;
-    if (!frames[i]) {
-      frames[i] = [];
-    }
+  const walls = [];
+
+  for (const [x, y, r] of edges) {
     switch (r) {
       case "n":
-        frames[i].push([x * unit, (y - 1) * unit, 1, unit + 1]);
+        walls.push([
+          (x + 0.5) * unit,
+          (y - 0.5) * unit,
+          (x + 0.5) * unit,
+          (y + 0.5) * unit,
+        ]);
         continue;
       case "e":
-        frames[i].push([x * unit, y * unit, unit + 1, 1]);
+        walls.push([
+          (x + 0.5) * unit,
+          (y + 0.5) * unit,
+          (x + 1.5) * unit,
+          (y + 0.5) * unit,
+        ]);
         continue;
       case "s":
-        frames[i].push([x * unit, y * unit, 1, unit + 1]);
+        walls.push([
+          (x + 0.5) * unit,
+          (y + 0.5) * unit,
+          (x + 0.5) * unit,
+          (y + 1.5) * unit,
+        ]);
         continue;
       case "w":
-        frames[i].push([(x - 1) * unit, y * unit, unit + 1, 1]);
+        walls.push([
+          (x - 0.5) * unit,
+          (y + 0.5) * unit,
+          (x + 0.5) * unit,
+          (y + 0.5) * unit,
+        ]);
         continue;
     }
   }
 
-  for (let i = 0, l = frames.length; i < l; i++) {
-    frames[i]?.forEach(([a, b, c, d]) => context.fillRect(a, b, c, d));
+  for (const [a, b, c, d] of walls) {
+    context.beginPath();
+    context.moveTo(a, b);
+    context.lineTo(c, d);
+    context.stroke();
   }
 }
 

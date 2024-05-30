@@ -4,6 +4,7 @@ const SCRIPTS = [
   "hyperbolic.js",
   "hyperbolic3.js",
   "hyperbolic5.js",
+  "kruskal.js",
   "maze.js",
   "maze2.js",
   "maze3.js",

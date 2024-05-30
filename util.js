@@ -25,3 +25,16 @@ export function sample(array) {
   }
   return array[Math.floor(Math.random() * array.length)];
 }
+
+export function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = ((i + 1) * Math.random()) | 0;
+    const elt = array[i];
+    array[i] = array[j];
+    array[j] = elt;
+  }
+}
+
+export function fill(length,f) {
+  return Array.from({length}).map((_,i) => f(i))
+}

@@ -1,5 +1,12 @@
 # Maze
 
+## 2024-05-31
+
+### Invert maze 4
+
+Instead of avoiding vertices that have two visited neighbours, include them
+directly into the graph.
+
 ## 2024-05-25
 
 ### analysis

@@ -104,7 +104,7 @@ function triangles() {
         j + sign / 4,
         nodes[i][j - 1],
         nodes[i - 1]?.[j],
-        nodes[i - 1]?.[j + sign]
+        nodes[i - 1]?.[j + sign],
       );
     }
   }
@@ -131,7 +131,7 @@ function triangles2(size = 49) {
         ((j - i) * Math.sqrt(3)) / 2,
         nodes[i - 1]?.[j],
         nodes[i - 1]?.[j - 1],
-        nodes[i][j - 1]
+        nodes[i][j - 1],
       );
     }
   }
@@ -182,7 +182,7 @@ function squares2(size = 49) {
         nodes[i - 1]?.[j - 1],
         nodes[i - 1]?.[j],
         nodes[i - 1]?.[j + 1],
-        nodes[i][j - 1]
+        nodes[i][j - 1],
       );
     }
   }
@@ -211,14 +211,14 @@ function squares3(size = 49) {
           j + E * sign,
           nodes[i - 1]?.[j],
           nodes[i - 1]?.[j + sign],
-          nodes[i][j - 1]
+          nodes[i][j - 1],
         );
       } else {
         nodes[i][j] = new Node(
           i + E,
           j + E * sign,
           nodes[i - 1]?.[j],
-          nodes[i][j - 1]
+          nodes[i][j - 1],
         );
       }
     }
@@ -315,7 +315,7 @@ function hexagons(size = 24) {
           2 * i - 1 / 3,
           ETH * j,
           nodes[i - 1]?.[j],
-          nodes[i][j - 1]
+          nodes[i][j - 1],
         );
       } else {
         nodes[i][j] = new Node(2 * i + 1 / 3, ETH * j, nodes[i][j - 1]);
@@ -346,7 +346,7 @@ function disc() {
         r * Math.sin(j / r),
         nodes[i][j - 1],
         nodes[i - 1]?.[Math.floor(k)],
-        nodes[i - 1]?.[Math.ceil(k)]
+        nodes[i - 1]?.[Math.ceil(k)],
       );
     }
     nodes[i][0] = new Node(
@@ -354,7 +354,7 @@ function disc() {
       0,
       nodes[i][6 * i - 1],
       nodes[i][1],
-      nodes[i - 1]?.[0]
+      nodes[i - 1]?.[0],
     );
   }
   nodes[51][51].color = "#993333";
@@ -387,7 +387,7 @@ function disc2() {
         r * Math.sin(dth * (j + 0.5)),
         nodes[i][j - 1],
         nodes[i - 1]?.[kLow],
-        nodes[i - 1]?.[kHigh]
+        nodes[i - 1]?.[kHigh],
       );
     }
     nodes[i][0] = new Node(
@@ -396,7 +396,7 @@ function disc2() {
       nodes[i][1],
       nodes[i][counts[i] - 1],
       nodes[i - 1]?.[0],
-      nodes[i - 1]?.[counts[i - 1] - 1]
+      nodes[i - 1]?.[counts[i - 1] - 1],
     );
   }
   const m = counts[0] >> 2;
@@ -408,7 +408,7 @@ function disc2() {
 const FACTOR = 4 / 29;
 function spiral() {
   const nodes = [new Node(0, 0)];
-  for (let i = 1; ; i++) {
+  for (let i = 1;; i++) {
     const th = 2 * Math.sqrt(i * Math.PI);
     if (FACTOR * th >= 50) {
       break;
@@ -419,7 +419,7 @@ function spiral() {
       FACTOR * th * Math.sin(th),
       nodes[i - 1],
       nodes[Math.floor(j)],
-      nodes[Math.ceil(j)]
+      nodes[Math.ceil(j)],
     );
   }
   const k = nodes.length - 180;
@@ -439,7 +439,7 @@ function spiral2() {
       FACTOR * th * Math.sin(th),
       nodes[i + 1],
       nodes[Math.floor(j)],
-      nodes[Math.ceil(j)]
+      nodes[Math.ceil(j)],
     );
   }
   nodes[nodes.length - 180].color = "#996633";
@@ -498,7 +498,6 @@ function chaos() {
 }
 
 const GENERATORS = [
-  triangles2,
   chaos,
   disc,
   disc2,
@@ -511,6 +510,7 @@ const GENERATORS = [
   squares3,
   squares4,
   triangles,
+  triangles2,
 ];
 let index = 0;
 export function run(canvas) {

@@ -1,4 +1,4 @@
-import { sample} from './util.js';
+import { sample } from "./util.js";
 
 function randomInt(max = Number.MAX_SAFE_INTEGER) {
   return (Math.random() * max) | 0;

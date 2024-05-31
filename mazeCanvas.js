@@ -10,6 +10,7 @@ const SCRIPTS = [
   "maze3.js",
   "maze4.js",
   "maze5.js",
+  "maze6.js",
   "planar.js",
   "planar2.js",
   "spiral.js",

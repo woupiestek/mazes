@@ -35,6 +35,6 @@ export function shuffle(array) {
   }
 }
 
-export function fill(length,f) {
-  return Array.from({length}).map((_,i) => f(i))
+export function fill(length, f) {
+  return Array.from({ length }).map((_, i) => f(i));
 }

@@ -59,7 +59,6 @@ function generateMaze({ maxX, maxY }) {
     if (neighbours.length === 0) {
       switch (boundary.length) {
         case 0:
-          console.log(i);
           return edges;
         case 1:
           node = boundary.pop();

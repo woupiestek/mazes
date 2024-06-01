@@ -1,7 +1,7 @@
 import { fill, shuffle } from "./util";
 
 class Vertex {
-  parent; // Node?
+  parent;
   count = 0;
   findSet() {
     if (this.parent) return (this.parent = this.parent.findSet());

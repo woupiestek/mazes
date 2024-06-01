@@ -24,12 +24,12 @@ export class MazeCanvas extends LitElement {
         margin: auto;
       }
       .container {
-        background-color: #dddddd;
         display: flex;
       }
       .menu {
         display: flex;
         flex-direction: column;
+        gap: 8px;
         height: 700px;
       }
     `,

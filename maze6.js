@@ -278,7 +278,7 @@ function draw3(canvas, grid) {
   }
 }
 
-const GENERATORS = [triangles, disc, spiral, squares]; //, spiral, squares, triangles];
+const GENERATORS = [disc, spiral, squares, triangles];
 let index = 0;
 
 // bugs remain: unconnected

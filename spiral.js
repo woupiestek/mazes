@@ -11,11 +11,12 @@ function walk(inner, outer, count) {
     let i = stack.pop();
     const wall = [i];
     while (true) {
+      const th = 2 * Math.sqrt(factor * i);
       const open = [
+        Math.round(i + th + factor),
         i + 1,
-        Math.round(i + 2 * Math.sqrt(factor * i) + factor),
         i - 1,
-        Math.round(i - 2 * Math.sqrt(factor * i) + factor),
+        Math.round(i - th + factor),
       ].filter((j) => j > min && j < max && !visited[j]);
       switch (open.length) {
         case 0:
@@ -35,7 +36,6 @@ function walk(inner, outer, count) {
     }
   }
 
-  console.log(walls.length);
   return walls.flatMap(coords(min, max, count));
 }
 
@@ -79,7 +79,7 @@ export function run(canvas) {
   canvas.setAttribute("width", 700);
   canvas.setAttribute("height", 700);
   context.strokeStyle = "#663399";
-  context.lineWidth = 1;
+  context.lineWidth = 5;
   context.lineCap = "round";
   context.lineJoin = "round";
 

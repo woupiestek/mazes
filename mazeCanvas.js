@@ -14,6 +14,7 @@ const SCRIPTS = [
   "planar.js",
   "planar2.js",
   "spiral.js",
+  "spiral2.js",
   "triangle_2_4_4.js",
 ];
 

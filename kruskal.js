@@ -80,24 +80,26 @@ function alternative(size = 69) {
       wall: false,
       vertex: new Vertex(),
       weight: Math.random(),
-    }))
-  );
+    })));
   const nodes = grid.flat();
   nodes.sort((n, m) => n.weight - m.wieght);
   const walls = fill(size, () => fill(size, () => false));
   a: for (const node of nodes) {
     const sets = new Set();
-    for (const neighbour of [
-      grid[node.i - 1]?.[node.j],
-      grid[node.i][node.j - 1],
-      grid[node.i][node.j + 1],
-      grid[node.i + 1]?.[node.j],
-    ]) {
+    for (
+      const neighbour of [
+        grid[node.i - 1]?.[node.j],
+        grid[node.i][node.j - 1],
+        grid[node.i][node.j + 1],
+        grid[node.i + 1]?.[node.j],
+      ]
+    ) {
       if (
-        (!neighbour||
-        neighbour.weight > node.weight || walls[neighbour.i][neighbour.j])
-      )
+        (!neighbour ||
+          neighbour.weight > node.weight || walls[neighbour.i][neighbour.j])
+      ) {
         continue;
+      }
       const set = neighbour.vertex.findSet();
       if (sets.has(set)) {
         walls[node.i][node.j] = true;
@@ -126,15 +128,17 @@ function draw2(canvas, walls) {
   for (let i = 0; i < 69; i++) {
     for (let j = 0; j < 69; j++) {
       if (!walls[i][j]) continue;
-      
+
       //  context.fillRect(5 + UNIT * i, 5 + UNIT * j, UNIT, UNIT);
-      
-      for (const [i2, j2] of [
-        [i - 1, j - 1],
-        [i - 1, j],
-        [i - 1, j + 1],
-        [i, j - 1],
-      ]) {
+
+      for (
+        const [i2, j2] of [
+          [i - 1, j - 1],
+          [i - 1, j],
+          [i - 1, j + 1],
+          [i, j - 1],
+        ]
+      ) {
         if (walls[i][j] && walls[i2]?.[j2]) {
           context.beginPath();
           context.moveTo(5 + UNIT * i, 5 + UNIT * j);

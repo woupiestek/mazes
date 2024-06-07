@@ -108,7 +108,7 @@ function spiral(radius = 34) {
     const th = 2 * Math.sqrt(i * Math.PI);
     const node = (nodes[i] = new Node(
       35 + (th * Math.cos(th)) / TAU,
-      35 + (th * Math.sin(th)) / TAU
+      35 + (th * Math.sin(th)) / TAU,
     ));
     node.connect(nodes[i - 1]);
 
@@ -177,7 +177,7 @@ function triangles(size = 69) {
     for (let j = j0; j < j1; j++) {
       nodes[i][j] = new Node(
         (i + j + xOffset) / 2,
-        ((j - i) * Math.sqrt(3)) / 2 + 35
+        ((j - i) * Math.sqrt(3)) / 2 + 35,
       );
       nodes[i][j].connect(nodes[i - 1]?.[j - 1]);
       nodes[i][j].connect(nodes[i - 1]?.[j]);

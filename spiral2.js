@@ -60,7 +60,7 @@ function grid3(maxTh, alpha = 4 * Math.PI, count = 3) {
       continue;
     }
     if (count * th >= maxTh) {
-      return nodes.flat();
+      return nodes.flatMap((arm) => arm.filter((it) => it));
     }
     const ns = [nodes[j]];
     while (j <= i + beta * (half - th)) {
@@ -82,6 +82,7 @@ function grid3(maxTh, alpha = 4 * Math.PI, count = 3) {
 function walk(node) {
   const frontier = [];
   const visited = new Set();
+  visited.add(node.i);
   const walls = [];
   a: while (node) {
     const wall = [node];
@@ -124,7 +125,7 @@ export function run(canvas) {
   );
   count %= 8;
 
-  const walls = walk(sample(nodes.filter((it) => it)));
+  const walls = walk(sample(nodes));
 
   for (const [h, ...t] of walls) {
     context.beginPath();

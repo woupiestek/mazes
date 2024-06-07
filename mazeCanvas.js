@@ -1,6 +1,7 @@
 import { css, html, LitElement } from "lit";
 
 const SCRIPTS = [
+  "discs.js",
   "hyperbolic.js",
   "hyperbolic3.js",
   "hyperbolic5.js",

@@ -25,17 +25,14 @@ function grid(maxR, alpha = TAU) {
     nodes[i] = [];
     const factor = counts[i - 1] / (2 * counts[i]);
     const radius = counts[i] / alpha;
-    for (let j = 1, k = 0; j < counts[i]; j++) {
-      const neighbours = [nodes[i][j - 1], nodes[i - 1]?.[k]];
-      while (k <= (2 * j + 1) * factor - 1 / 2) {
-        neighbours.push(nodes[i - 1][++k]);
-      }
+    for (let j = 1; j < counts[i]; j++) {
+      const k = Math.round((2 * j + 1) * factor - 1 / 2);
       const th = ((2 * j + 1) / counts[i]) * Math.PI;
       nodes[i][j] = new Node(
         i + j / counts[i],
         radius * Math.cos(th),
         radius * Math.sin(th),
-        neighbours
+        [nodes[i][j - 1], nodes[i - 1]?.[k]]
       );
     }
     const th = Math.PI / counts[i];
@@ -43,7 +40,6 @@ function grid(maxR, alpha = TAU) {
       nodes[i][1],
       nodes[i][counts[i] - 1],
       nodes[i - 1][0],
-      nodes[i - 1][counts[i - 1] - 1],
     ]);
   }
   return nodes.flat();

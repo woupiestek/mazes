@@ -16,37 +16,30 @@ class Node {
   }
 }
 
-const TAU = 2 * Math.PI;
-
-function grid(maxR, alpha = TAU) {
-  const counts = fill(Math.floor(maxR), (i) => Math.round(i * alpha));
-  const nodes = [[]];
-  for (let i = 1; i < counts.length; i++) {
-    nodes[i] = [];
-    const factor = counts[i - 1] / (2 * counts[i]);
-    const radius = counts[i] / alpha;
-    for (let j = 1, k = 0; j < counts[i]; j++) {
-      const neighbours = [nodes[i][j - 1], nodes[i - 1]?.[k]];
-      while (k <= (2 * j + 1) * factor - 1 / 2) {
-        neighbours.push(nodes[i - 1][++k]);
-      }
-      const th = ((2 * j + 1) / counts[i]) * Math.PI;
-      nodes[i][j] = new Node(
-        i + j / counts[i],
-        radius * Math.cos(th),
-        radius * Math.sin(th),
-        neighbours
-      );
+function grid3(maxTh, alpha = 4 * Math.PI, count = 3) {
+  const half = Math.PI / count;
+  const beta = (4 * Math.PI) / alpha;
+  const nodes = [];
+  for (let i = 0;; i++) {
+    const th = Math.sqrt((i * alpha) / count);
+    if (th < half) {
+      continue;
     }
-    const th = Math.PI / counts[i];
-    nodes[i][0] = new Node(i, radius * Math.cos(th), radius * Math.sin(th), [
-      nodes[i][1],
-      nodes[i][counts[i] - 1],
-      nodes[i - 1][0],
-      nodes[i - 1][counts[i - 1] - 1],
-    ]);
+    if (count * th >= maxTh) {
+      return nodes.flatMap((arm) => arm.filter((it) => it));
+    }
+    const j  = Math.round(i + beta * (half - th)) 
+    nodes[i] = fill(
+      count,
+      (k) =>
+        new Node(
+          count * i + k,
+          count * th * Math.cos(th + 2 * half * k),
+          count * th * Math.sin(th + 2 * half * k),
+          [nodes[i - 1]?.[k], nodes[j]?.[(k + 1) % count]],
+        ),
+    );
   }
-  return nodes.flat();
 }
 
 function walk(node) {
@@ -57,7 +50,9 @@ function walk(node) {
   a: while (node) {
     const wall = [node];
     for (;;) {
-      const next = sample(node.neighbours.filter((it) => !visited.has(it.i)));
+      const next = sample(
+        node.neighbours.filter((it) => !visited.has(it.i)),
+      );
       if (!next) {
         if (wall.length > 1) {
           walls.push(wall);
@@ -74,6 +69,8 @@ function walk(node) {
   return walls;
 }
 
+let count = 4;
+
 export function run(canvas) {
   const context = canvas.getContext("2d");
   canvas.setAttribute("width", 700);
@@ -83,8 +80,13 @@ export function run(canvas) {
   context.lineCap = "round";
   context.lineJoin = "round";
 
-  const UNIT = 15;
-  const nodes = grid(23, Math.PI * 2 * Math.exp(0.5 - Math.random()));
+  const UNIT = 3;
+  const nodes = grid3(
+    115,
+    Math.PI * 4 * Math.exp(0.5 - Math.random()),
+    ++count,
+  );
+  count %= 8;
 
   const walls = walk(sample(nodes));
 
